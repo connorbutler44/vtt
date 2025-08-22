@@ -1,5 +1,5 @@
 import { Server, Socket } from "socket.io";
-import gameState from "./gameState";
+import { gameState } from "@vtt/schema";
 
 export default function registerSocketHandlers(io: Server, socket: Socket) {
   // Send full state when player joins

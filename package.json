@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "schema"
+  ],
+  "scripts": {
+    "dev:frontend": "yarn workspace frontend dev",
+    "dev:backend": "yarn workspace backend dev",
+    "dev": "concurrently \"yarn run dev:frontend\" \"yarn run dev:backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
