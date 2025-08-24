@@ -1,16 +1,14 @@
-import { Server } from "socket.io";
-import { gameState } from "@vtt/shared/types";
-import { VttServerSocket } from "@vtt/shared/util/socket";
+import { gameState, VttServer, VttServerSocket } from "@vtt/shared/types";
 
 export default function registerSocketHandlers(
-  io: Server,
+  io: VttServer,
   socket: VttServerSocket
 ) {
   socket.on("JOIN_GAME", () => {
     socket.emit("GAME_STATE", gameState);
   });
 
-  socket.on("MOVE_TOKEN", ({ tokenId, to }) => {
+  socket.on("MOVE_TOKEN", ({ to, tokenId }) => {
     const token = gameState.tokens.find((t) => t.id === tokenId);
     if (!token) return;
 

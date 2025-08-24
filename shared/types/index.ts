@@ -1,3 +1,6 @@
+import { Server, Socket as ServerSocket } from "socket.io";
+import { Socket as ClientSocket } from "socket.io-client";
+
 export interface Token {
   id: string;
   x: number;
@@ -16,22 +19,37 @@ export const gameState: GameState = {
   ],
 };
 
-export interface ClientEventPayloads {
-  JOIN_GAME: void;
-  MOVE_TOKEN: {
-    tokenId: string;
-    to: { x: number; y: number };
-  };
+export interface ClientToServerEvents {
+  JOIN_GAME: () => void;
+  MOVE_TOKEN: (data: { tokenId: string; to: { x: number; y: number } }) => void;
 }
 
-export interface ServerEventPayloads {
-  GAME_STATE: typeof gameState;
-  TOKEN_MOVED: {
+export interface ServerToClientEvents {
+  GAME_STATE: (state: GameState) => void;
+  TOKEN_MOVED: (data: {
     tokenId: string;
     to: { x: number; y: number };
-  };
-  connect: void;
+  }) => void;
+  connect: () => void;
 }
 
-export type ClientEvent = keyof ClientEventPayloads;
-export type ServerEvent = keyof ServerEventPayloads;
+export type ClientToServerEventKey = keyof ClientToServerEvents;
+export type ServerToClientEventKey = keyof ServerToClientEvents;
+
+export type VttServer = Server<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  never,
+  never
+>;
+
+export type VttServerSocket = ServerSocket<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  never,
+  never
+>;
+export type VttClientSocket = ClientSocket<
+  ServerToClientEvents,
+  ClientToServerEvents
+>;

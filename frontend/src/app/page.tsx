@@ -11,8 +11,8 @@ export default function HomePage() {
     const socket = getSocket();
 
     socket.on("connect", () => {
-      console.log("Connected to backend:", socket.internal.id);
-      socket.emit("JOIN_GAME", undefined);
+      console.log("Connected to backend:", socket.id);
+      socket.emit("JOIN_GAME");
     });
 
     socket.on("GAME_STATE", (state) => {
