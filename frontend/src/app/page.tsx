@@ -2,30 +2,31 @@
 
 import { useEffect, useState } from "react";
 import { getSocket } from "../socket";
+import { GameState } from "@vtt/shared/types";
 
 export default function HomePage() {
-  const [gameState, setGameState] = useState<any>(null);
+  const [gameState, setGameState] = useState<GameState | null>(null);
 
   useEffect(() => {
     const socket = getSocket();
 
     socket.on("connect", () => {
-      console.log("Connected to backend:", socket.id);
-      socket.emit("joinGame");
+      console.log("Connected to backend:", socket.internal.id);
+      socket.emit("JOIN_GAME", undefined);
     });
 
-    socket.on("gameState", (state) => {
+    socket.on("GAME_STATE", (state) => {
       console.log("Received game state:", state);
       setGameState(state);
     });
 
-    socket.on("tokenMoved", (data) => {
+    socket.on("TOKEN_MOVED", (data) => {
       console.log("Token moved:", data);
-      setGameState((prev: any) => {
+      setGameState((prev) => {
         if (!prev) return prev;
         return {
           ...prev,
-          tokens: prev.tokens.map((t: any) =>
+          tokens: prev.tokens.map((t) =>
             t.id === data.tokenId ? { ...t, ...data.to } : t
           ),
         };
@@ -34,8 +35,8 @@ export default function HomePage() {
 
     return () => {
       socket.off("connect");
-      socket.off("gameState");
-      socket.off("tokenMoved");
+      socket.off("GAME_STATE");
+      socket.off("TOKEN_MOVED");
     };
   }, []);
 
@@ -51,7 +52,10 @@ export default function HomePage() {
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
         onClick={() => {
           const socket = getSocket();
-          socket.emit("moveToken", { tokenId: "t1", to: { x: 5, y: 7 } });
+          socket.emit("MOVE_TOKEN", {
+            tokenId: "t1",
+            to: { x: 5, y: 7 },
+          });
         }}
       >
         Move Token t1

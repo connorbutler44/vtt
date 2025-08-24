@@ -5,7 +5,10 @@
     "module": "commonjs",
     "outDir": "dist",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "paths": {
+      "@vtt/shared/*": ["shared/*"]
+    }
   },
-  "include": ["src/**/*.ts", "../schema/**/*.ts"]
+  "include": ["src/**/*.ts"]
 }

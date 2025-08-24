@@ -7,7 +7,7 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@schema/*": ["schema/*"]
+      "@vtt/shared/*": ["shared/*"]
     }
   }
 }

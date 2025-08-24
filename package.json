@@ -3,11 +3,11 @@
   "workspaces": [
     "frontend",
     "backend",
-    "schema"
+    "shared"
   ],
   "scripts": {
-    "dev:frontend": "yarn workspace frontend dev",
-    "dev:backend": "yarn workspace backend dev",
+    "dev:frontend": "yarn workspace @vtt/frontend dev",
+    "dev:backend": "yarn workspace @vtt/backend dev",
     "dev": "concurrently \"yarn run dev:frontend\" \"yarn run dev:backend\""
   },
   "devDependencies": {

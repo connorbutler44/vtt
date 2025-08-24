@@ -1,12 +1,15 @@
-import { Socket, connect } from "socket.io-client";
+import { VttClientSocket } from "@vtt/shared/util/socket";
+import { connect } from "socket.io-client";
 
-let socket: typeof Socket | null = null;
+let socket: VttClientSocket | null = null;
 
 export function getSocket() {
   if (!socket) {
-    socket = connect("http://localhost:8080", {
-      transports: ["websocket"],
-    });
+    socket = new VttClientSocket(
+      connect(process.env.NEXT_PUBLIC_VTT_BACKEND_URL!, {
+        transports: ["websocket"],
+      })
+    );
   }
   return socket;
 }
