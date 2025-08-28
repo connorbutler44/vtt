@@ -128,10 +128,31 @@ export default function HomePage() {
 
   const onWheel = (e: React.WheelEvent) => {
     e.preventDefault();
-    setCameraState((prev) => ({
-      ...prev,
-      zoom: prev.zoom * (e.deltaY < 0 ? ZOOM_FACTOR : 1 / ZOOM_FACTOR),
-    }));
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const worldPos = boardUtils.screenToWorldPosition(
+      e.clientX,
+      e.clientY,
+      cameraState
+    );
+
+    const newZoom =
+      cameraState.zoom * (e.deltaY < 0 ? ZOOM_FACTOR : 1 / ZOOM_FACTOR);
+
+    // modify camera translation so the zoom is centered on the mouse position
+    const newX = worldPos.x - e.clientX / newZoom;
+    const newY = worldPos.y - e.clientY / newZoom;
+
+    setCameraState((prev) => {
+      return {
+        ...prev,
+        zoom: newZoom,
+        x: newX,
+        y: newY,
+      };
+    });
   };
 
   const onMouseDown = (e: MouseEvent) => {
@@ -173,6 +194,14 @@ export default function HomePage() {
     setSelectedToken(null);
   };
 
+  const onCharacterListCardClick = (token: Token) => {
+    if (!canvasRef.current) return;
+
+    setCameraState((prev) =>
+      boardUtils.centerCameraOnPosition(prev, token, canvasRef.current!)
+    );
+  };
+
   return (
     <main className="w-full h-full">
       <header className="z-1 h-10 bg-gray-900 text-white flex items-center px-4 opacity-90">
@@ -187,6 +216,7 @@ export default function HomePage() {
             currentHealth={10}
             maxHealth={16}
             ac={16}
+            onClick={() => onCharacterListCardClick(token)}
           />
         ))}
       </aside>

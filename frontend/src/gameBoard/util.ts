@@ -1,3 +1,4 @@
+import { GridPosition } from "@vtt/shared/types";
 import { CELL_HEIGHT, CELL_WIDTH } from "./constants";
 import { CameraState } from "./draw";
 
@@ -22,5 +23,20 @@ export function worldToGridCoordinates(worldX: number, worldY: number) {
   return {
     x: Math.floor(worldX / CELL_WIDTH),
     y: Math.floor(worldY / CELL_HEIGHT),
+  };
+}
+
+/**
+ * Centers camera on a specific world position
+ */
+export function centerCameraOnPosition(
+  camera: CameraState,
+  position: GridPosition,
+  canvas: HTMLCanvasElement
+) {
+  return {
+    ...camera,
+    x: position.x * CELL_WIDTH - canvas.width / 2 / camera.zoom,
+    y: position.y * CELL_WIDTH - canvas.height / 2 / camera.zoom,
   };
 }

@@ -4,11 +4,15 @@ interface Props {
   ac: number;
   currentHealth: number;
   maxHealth: number;
+  onClick: () => void;
 }
 
 export const CharacterListCard = (props: Props) => {
   return (
-    <div className="w-full h-26 bg-gray-800 rounded-lg shadow-md p-4 flex text-white">
+    <div
+      className="w-full h-26 bg-gray-800 rounded-lg shadow-md p-4 flex text-white hover:shadow-lg cursor-pointer hover:outline-2 hover:outline-yellow-300"
+      onClick={props.onClick}
+    >
       <img
         src={props.src}
         className=" rounded-full mr-4 border border-gray-600"
