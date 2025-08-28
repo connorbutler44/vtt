@@ -92,11 +92,7 @@ const drawTokens = (
 
     ctx.globalAlpha = tokenIsDragging ? 0.5 : 1.0;
 
-    const { x, y, id, name, src } = token;
-
-    // center of cell
-    const cx = (x + 0.5) * constants.CELL_WIDTH;
-    const cy = (y + 0.5) * constants.CELL_HEIGHT;
+    const { id, x, y, name, src } = token;
 
     const img = loadImage(src);
 
@@ -108,15 +104,15 @@ const drawTokens = (
       constants.CELL_HEIGHT * 0.8
     );
 
-    ctx.strokeStyle = "#222";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    ctx.fillStyle = "#fff";
-    ctx.font = `${Math.floor(constants.CELL_WIDTH * 0.3)}px sans-serif`;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(name, cx, cy);
+    if (tokenIsDragging && selectedToken) {
+      ctx.drawImage(
+        img,
+        selectedToken.x + constants.CELL_HEIGHT * 0.1,
+        selectedToken.y + constants.CELL_HEIGHT * 0.1,
+        constants.CELL_WIDTH * 0.8,
+        constants.CELL_HEIGHT * 0.8
+      );
+    }
   }
 };
 

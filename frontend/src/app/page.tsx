@@ -113,16 +113,15 @@ export default function HomePage() {
   const onMouseMove = (e: React.MouseEvent) => {
     if (e.buttons === 1) {
       handleMouseMoveWithLeftClick(e);
-    } else {
-      const worldPos = boardUtils.screenToWorldPosition(
-        e.clientX,
-        e.clientY,
-        cameraState
-      );
-      const gridPos = boardUtils.worldToGridCoordinates(worldPos.x, worldPos.y);
-
-      setHighlightedCell(gridPos);
     }
+    const worldPos = boardUtils.screenToWorldPosition(
+      e.clientX,
+      e.clientY,
+      cameraState
+    );
+    const gridPos = boardUtils.worldToGridCoordinates(worldPos.x, worldPos.y);
+
+    setHighlightedCell(gridPos);
   };
 
   const onWheel = (e: React.WheelEvent) => {

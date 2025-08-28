@@ -18,9 +18,9 @@ export function screenToWorldPosition(
 /**
  * Converts world coordinates to grid coordinates
  */
-export function worldToGridCoordinates(x: number, y: number) {
+export function worldToGridCoordinates(worldX: number, worldY: number) {
   return {
-    x: Math.floor(x / CELL_WIDTH),
-    y: Math.floor(y / CELL_HEIGHT),
+    x: Math.floor(worldX / CELL_WIDTH),
+    y: Math.floor(worldY / CELL_HEIGHT),
   };
 }
