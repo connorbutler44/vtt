@@ -7,6 +7,7 @@ import { CharacterListCard } from "../components/CharacterListCard";
 import { CameraState, draw } from "../gameBoard/draw";
 import { StatusWidget } from "../components/StatusWidget";
 import * as boardUtils from "../gameBoard/util";
+import { ZOOM_FACTOR } from "../gameBoard/constants";
 
 export default function HomePage() {
   const socket = getSocket();
@@ -88,13 +89,14 @@ export default function HomePage() {
         e.clientY,
         cameraState
       );
+      const gridPos = boardUtils.worldToGridCoordinates(worldPos.x, worldPos.y);
 
       setSelectedToken((prev) => {
         if (prev) {
           return {
             ...prev,
-            x: worldPos.x,
-            y: worldPos.y,
+            x: gridPos.x,
+            y: gridPos.y,
           };
         }
 
@@ -128,7 +130,7 @@ export default function HomePage() {
     e.preventDefault();
     setCameraState((prev) => ({
       ...prev,
-      zoom: prev.zoom * (e.deltaY < 0 ? 1.1 : 1 / 1.1),
+      zoom: prev.zoom * (e.deltaY < 0 ? ZOOM_FACTOR : 1 / ZOOM_FACTOR),
     }));
   };
 

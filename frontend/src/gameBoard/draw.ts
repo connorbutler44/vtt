@@ -107,8 +107,8 @@ const drawTokens = (
     if (tokenIsDragging && selectedToken) {
       ctx.drawImage(
         img,
-        selectedToken.x + constants.CELL_HEIGHT * 0.1,
-        selectedToken.y + constants.CELL_HEIGHT * 0.1,
+        selectedToken.x * constants.CELL_HEIGHT + constants.CELL_HEIGHT * 0.1,
+        selectedToken.y * constants.CELL_HEIGHT + constants.CELL_HEIGHT * 0.1,
         constants.CELL_WIDTH * 0.8,
         constants.CELL_HEIGHT * 0.8
       );
