@@ -5,6 +5,8 @@ export interface Token {
   id: string;
   x: number;
   y: number;
+  src: string;
+  name: string;
 }
 
 export interface GameState {
@@ -13,9 +15,10 @@ export interface GameState {
 
 export const gameState: GameState = {
   tokens: [
-    { id: "t1", x: 0, y: 0 },
-    { id: "t2", x: 2, y: 3 },
-    { id: "t2", x: 2, y: 3 },
+    { id: "t1", x: 3, y: 3, src: "./barsik.png", name: "Barsik" },
+    { id: "t2", x: 4, y: 4, src: "./shadowheart.png", name: "Shadowheart" },
+    { id: "t3", x: 5, y: 5, src: "./Scratch.png", name: "Scratch" },
+    { id: "t4", x: 7, y: 3, src: "./owlbearcub.png", name: "Owlbear Cub" },
   ],
 };
 
@@ -53,3 +56,8 @@ export type VttClientSocket = ClientSocket<
   ServerToClientEvents,
   ClientToServerEvents
 >;
+
+export interface GridPosition {
+  x: number;
+  y: number;
+}

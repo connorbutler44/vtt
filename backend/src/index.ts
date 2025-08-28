@@ -21,6 +21,10 @@ io.on("connection", (socket) => {
   registerSocketHandlers(io, socket);
 });
 
+io.on("disconnect", (socket) => {
+  console.log(`Player disconnected: ${socket.id}`);
+});
+
 const PORT = process.env.VTT_BACKEND_PORT ?? 8080;
 
 httpServer.listen(PORT, () => {
